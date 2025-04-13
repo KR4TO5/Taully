@@ -32,19 +32,19 @@ class _ProductListPageState extends State<ProductListPage> {
 
   final List<Map<String, dynamic>> products = const [
     {
-      'name': '',
+      'name': ' Aceite Primor 900 Ml',
       'price': 1.50,
-      'image': 'https://i.postimg.cc/NfjNVH63/agua-san-luis.jpg',
+      "image" : i,
     },
     {
       'name': 'Galleta Oreo 36g',
       'price': 1.20,
-      'image': 'https://i.postimg.cc/6Qf3hMLd/oreo.jpg',
+      child: Image.network
     },
     {
-      'name': 'Coca Cola 500ml',
+      'name': 'Coca Cola 600ml',
       'price': 2.50,
-      'image': 'https://i.postimg.cc/TwWxKbYL/coca-cola.jpg',
+      'image': 'https://corporacionliderperu.com/46924-large_default/primor-clasico-aceite-vegetal-bt-x-900-ml.jpg',
     },
     {
       'name': 'Inca Kola 500ml',
