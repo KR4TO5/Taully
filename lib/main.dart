@@ -32,19 +32,19 @@ class _ProductListPageState extends State<ProductListPage> {
 
   final List<Map<String, dynamic>> products = const [
     {
-      'name': ' Aceite Primor 900 Ml',
+      'name': 'Aceite Primor 900 Ml',
       'price': 1.50,
-      "image" : i,
+      'image': 'http://corporacionliderperu.com/46924-large_default/primor-clasico-aceite-vegetal-bt-x-900-ml.jpg',
     },
     {
-      'name': 'Galleta Oreo 36g',
+      'name': 'Harina maíz Pan',
       'price': 1.20,
-      child: Image.network
+      'image': 'https://walmartcr.vtexassets.com/arquivos/ids/535314/Harina-Maiz-Pan-Precoc-Blanco-1000gr-1-34028.jpg?v=638422918768000000',
     },
     {
-      'name': 'Coca Cola 600ml',
-      'price': 2.50,
-      'image': 'https://corporacionliderperu.com/46924-large_default/primor-clasico-aceite-vegetal-bt-x-900-ml.jpg',
+      'name': 'Esencia de Vainilla UNIVERSAL Frasco 100ml',
+      'price': 2.30,
+      'image': 'https://vegaperu.vtexassets.com/arquivos/ids/167153-600-338?v=638616862248900000&width=600&height=338&aspect=true',
     },
     {
       'name': 'Inca Kola 500ml',
@@ -55,6 +55,11 @@ class _ProductListPageState extends State<ProductListPage> {
       'name': 'Panetón D’onofrio 900g',
       'price': 19.90,
       'image': 'https://i.postimg.cc/0jczW9DY/paneton.jpg',
+    },
+    {
+      'name': 'Agua San Luis 625ml',
+      'price': 1.50,
+      'image': 'https://i.postimg.cc/NfjNVH63/agua-san-luis.jpg',
     },
   ];
 
@@ -71,6 +76,16 @@ class _ProductListPageState extends State<ProductListPage> {
   }
 
   void openCart() {
+    if (cart.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('El carrito está vacío'),
+          duration: Duration(seconds: 1),
+        ),
+      );
+      return;
+    }
+
     showModalBottomSheet(
       context: context,
       builder: (context) => ListView.builder(
@@ -91,48 +106,34 @@ class _ProductListPageState extends State<ProductListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: const Text('Minimarket Abarrotes'),
         backgroundColor: Colors.orange,
-        title: Row(
-          children: [
-            // Placeholder del logo
-            Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                shape: BoxShape.circle,
+        actions: [
+          Stack(
+            children: [
+              IconButton(
+                icon: const Icon(Icons.shopping_cart),
+                onPressed: openCart,
               ),
-              child: const Icon(Icons.store, color: Colors.orange),
-            ),
-            const SizedBox(width: 10),
-            const Text('Minimarket taully'),
-            const Spacer(),
-            Stack(
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.shopping_cart),
-                  onPressed: openCart,
-                ),
-                if (cart.isNotEmpty)
-                  Positioned(
-                    right: 4,
-                    top: 4,
-                    child: Container(
-                      padding: const EdgeInsets.all(4),
-                      decoration: const BoxDecoration(
-                        color: Colors.red,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Text(
-                        '${cart.length}',
-                        style: const TextStyle(color: Colors.white, fontSize: 12),
-                      ),
+              if (cart.isNotEmpty)
+                Positioned(
+                  right: 6,
+                  top: 6,
+                  child: Container(
+                    padding: const EdgeInsets.all(4),
+                    decoration: const BoxDecoration(
+                      color: Colors.red,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Text(
+                      '${cart.length}',
+                      style: const TextStyle(color: Colors.white, fontSize: 12),
                     ),
                   ),
-              ],
-            )
-          ],
-        ),
+                ),
+            ],
+          ),
+        ],
       ),
       body: ListView.builder(
         itemCount: products.length,
@@ -144,7 +145,7 @@ class _ProductListPageState extends State<ProductListPage> {
               padding: const EdgeInsets.all(12.0),
               child: Row(
                 children: [
-                  // Imagen
+                  // Imagen desde URL
                   Container(
                     width: 80,
                     height: 80,
@@ -161,7 +162,7 @@ class _ProductListPageState extends State<ProductListPage> {
                     ),
                   ),
                   const SizedBox(width: 16),
-                  // Info
+                  // Información del producto
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
